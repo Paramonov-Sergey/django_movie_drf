@@ -6,7 +6,7 @@ from.models import Movie
 
 
 class PaginatorMovies(PageNumberPagination):
-    page_size = 2
+    page_size = 1
     max_page_size = 1000
 
     def get_paginated_response(self, data):

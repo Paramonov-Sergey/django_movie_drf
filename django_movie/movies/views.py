@@ -18,6 +18,7 @@ class MovieViewSet(viewsets.ReadOnlyModelViewSet):
     filter_backends = (DjangoFilterBackend,)
     filterset_class = MovieFilter
     pagination_class = PaginatorMovies
+    serializer_action_class = {'list':MovieListSerializer,'retrieve':MovieDetailSerializer}
 
     def get_queryset(self):
         movies = Movie.objects.filter(draft=False).annotate(
@@ -26,20 +27,18 @@ class MovieViewSet(viewsets.ReadOnlyModelViewSet):
         return movies
 
     def get_serializer_class(self):
-        if self.action == 'list':
-            return MovieListSerializer
-        elif self.action == 'retrieve':
-            return MovieDetailSerializer
+        return self.serializer_action_class[self.action]
+        # if self.action == 'list':
+        #     return MovieListSerializer
+        # elif self.action == 'retrieve':
+        #     return MovieDetailSerializer
 
 
 class ActorViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Actor.objects.all()
-
+    serializer_action_class = {'list': ActorListSerializer, 'retrieve': ActorDetailSerializer}
     def get_serializer_class(self):
-        if self.action == 'list':
-            return ActorListSerializer
-        elif self.action == 'retrieve':
-            return ActorDetailSerializer
+        return self.serializer_action_class[self.action]
 
 
 class ReviewCreateViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
