@@ -1,3 +1,4 @@
+from django.contrib.auth import login
 from rest_framework.response import Response
 from django.db import models
 from rest_framework import viewsets, renderers, permissions, status
@@ -8,6 +9,7 @@ from rest_framework import generics, mixins
 from .service import *
 from django_filters.rest_framework import DjangoFilterBackend
 from .api import *
+
 
 from .models import Movie, Genre, Actor
 from .serializers import MovieListSerializer, MovieDetailSerializer, ReviewCreateSerializers, CreateRatingSerializer, \
